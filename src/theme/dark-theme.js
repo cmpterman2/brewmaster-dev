@@ -4,6 +4,16 @@ import {createMuiTheme} from "@material-ui/core";
 //See here - https://material-ui.com/customization/palette/
 //https://react-material-kit.devias.io/app/reports/dashboard
 export const theme = createMuiTheme({
+    "components":{
+      "MuiStepIcon": {
+        "styleOverrides": {
+          "root" : {
+            "color":"#ffb74d"
+          }
+        }
+      },
+    },
+
     "overrides": {
       "MuiLinearProgress": {
         "root": {

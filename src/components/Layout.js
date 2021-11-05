@@ -18,6 +18,8 @@ import CardActions from "@material-ui/core/CardActions";
 import { red, blue } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
+
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { resetError } from "../store/actions/errorActions.js";
@@ -28,25 +30,36 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { Link, Switch, Route } from "react-router-dom";
 
 import App from './Fermentation.js';
+import Session from './Session.js'
 
 import Upload from './Upload.js';
 
 import Chart from "./Chart.js";
 
-import { ThemeProvider } from "@material-ui/styles";
+
 
 import { CssBaseline } from "@material-ui/core";
 
-import {theme} from '../theme/dark-theme';
+
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Fullscreen from "react-full-screen";
 
-
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepButton from "@material-ui/core/StepButton";
 
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    "background-color": theme.palette.background.dark
+  },
+  fullscreen: {
+    flexGrow: 1,
+    "background-color": theme.palette.background.dark,
+    height : '100%'
   },
   top: {
     backgroundcolor: theme.palette.background.dark
@@ -59,6 +72,15 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     height: '60px',
+  },
+  stepper: {
+    color: theme.palette.primary.constrastText,
+    backgroundColor: theme.palette.background.default,
+    height: 0,
+    padding: 12,
+  },
+  foo: {
+    color: blue[600],
   },
   foo: {
     color: theme.palette.text.secondary,
@@ -84,9 +106,6 @@ const Layout = () => {
     dispatch(getSystemConfig());
   }, []); //Use [] to make sure this doesn't re-run
 
-  console.log('DEW IT')
-  console.log(isFull);
-  //console.log(socket);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -100,12 +119,9 @@ const Layout = () => {
 
   return (
     <div className={classes.root}>
-      <Fullscreen
-          enabled={isFull}
-          onChange={(isFull)=> dispatch(setFullScreen(isFull))}
-        >
-          <div className="full-screenable-node">
-        <ThemeProvider theme={theme}>
+      <Fullscreen enabled={isFull} onChange={(isFull) => dispatch(setFullScreen(isFull))}>
+          <div className={classes.fullscreen}>
+
           <CssBaseline />
           <AppBar position="static">
             <Toolbar>
@@ -137,17 +153,12 @@ const Layout = () => {
 
 
 
-
-
-
-
+            
 
         <Switch>
 
-          <Route exact path="/fermentation" component={App}></Route>
-          <Route exact path="/upload" component={Upload}></Route>
+          <Route path="/session" component={Session}></Route>
         </Switch>
-        </ThemeProvider>
         </div>
         </Fullscreen>
           </div >

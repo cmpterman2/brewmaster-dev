@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { connect } from '@giantmachines/redux-websocket';
 
+import {useHistory} from "react-router-dom";
+
 export function getSystemConfig() {
   return function(dispatch) {
     dispatch({type: "SYSTEM_CONFIG"});
@@ -10,6 +12,7 @@ export function getSystemConfig() {
         console.log(response.data);
         dispatch({type: "SYSTEM_CONFIG_FULFILLED", payload: response.data})
         dispatch(connect('ws://'+location.hostname+':'+response.data.port+'/events/'))
+        dispatch(useHistory().push("/home"))
       })
       .catch((err) => {
         dispatch({type: "SYSTEM_CONFIG_REJECTED", error: err.response.data})

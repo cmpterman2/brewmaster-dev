@@ -7,6 +7,7 @@ import error from "./errorReducer";
 import fermenter from "./fermenterReducer";
 import historyReducer from "./historyReducer";
 import chart from "./chartReducer";
+import session from "./sessionReducer"
 
 export default combineReducers({
   brew,
@@ -15,7 +16,8 @@ export default combineReducers({
   error,
   fermenter,
   history:historyReducer,
-  chart
+  chart,
+  session
 
     })
 //        routing: routerReducer,
