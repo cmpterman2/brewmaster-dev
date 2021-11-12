@@ -67,15 +67,15 @@ const Session = () => {
             {"Fermentation > "}
           </Typography>
           <Typography display='inline' variant="h4" color="textPrimary" >
-            Oatmeal New England IPA (04-05-2020)
+            Oatmeal New England IPA (11-06-2021)
           </Typography>
            
             </Grid>
             <Grid item xs={8}>
-            <Stepper nonLinear activeStep={1} className={classes.stepper}>
+            <Stepper nonLinear activeStep={5} className={classes.stepper}>
               {steps.map((label, index) => (
                 <Step key={label}  >  
-                  <StepButton {...((index < 1) ? {icon: (<CheckCircleOutlineIcon color='disabled'/>)} : {})} 
+                  <StepButton {...((index < 5) ? {icon: (<CheckCircleOutlineIcon color='disabled'/>)} : {})} 
                     
                     
                   >

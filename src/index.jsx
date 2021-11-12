@@ -3,12 +3,12 @@ import { render } from 'react-dom';
 
 import {Provider} from 'react-redux';
 import {Router, Route} from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import { createHashHistory } from "history";
 import { ThemeProvider } from "@material-ui/styles";
 
 import {theme} from './theme/dark-theme';
 
-export const history = createBrowserHistory();
+export const history = createHashHistory();
 
 
 import Layout from './components/Layout.js';

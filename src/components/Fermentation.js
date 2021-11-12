@@ -35,7 +35,7 @@ import Schedule from "./Schedule";
 
 import DisplayBox from './DisplayBox'
 
-import {getFermenterConfig, updateFermenter} from "../store/actions/brewActions"
+import {getFermenterData, updateFermenter} from "../store/actions/fermenterActions"
 
 
 const useStyles = makeStyles(theme => ({
@@ -65,16 +65,22 @@ export default function ButtonAppBar() {
   const dispatch = useDispatch();
 
   const chart = useSelector(state => state.chart, shallowEqual);
+  console.log(useSelector(state => state.fermenter));
 
-  const temp = useSelector(state => state.fermenter.lastReading.displayTemp);
-  const airTemp = useSelector(state => state.fermenter.airLastReading.displayTemp);
-  const target = useSelector(state => state.fermenter.config.target);
+  //State variables
+  const temp = useSelector(state => state.fermenter.state.fermTemp);
+  const airTemp = useSelector(state => state.fermenter.state.airTemp);
+  const target = useSelector(state => state.fermenter.state.target);
+  const deviceState = useSelector(state => state.fermenter.state.deviceState);
+  const scheduleStart = useSelector(state => state.fermenter.state.scheduleStart);
+
+  //Config variables
   const mode = useSelector(state => state.fermenter.config.mode);
   const schedule = useSelector(state => state.fermenter.config.schedule, shallowEqual);
-  const editConfig = useSelector(state => state.fermenter.editConfig, shallowEqual);
   const config = useSelector(state=> state.fermenter.config, shallowEqual);
-  const scheduleStart = useSelector(state => state.fermenter.scheduleStart);
-  const fermState = useSelector(state => state.fermenter.state);
+  
+  //Edit in progress?
+  const editConfig = useSelector(state => state.fermenter.editConfig, shallowEqual);
 
   let days = 'Not Started';
   if (scheduleStart > 0 ) {
@@ -91,7 +97,7 @@ export default function ButtonAppBar() {
   //Call this once - similar to onMount see https://reactjs.org/docs/hooks-overview.html
   useEffect(() => {
     // Update the document title using the browser API
-    dispatch(getFermenterConfig());
+    dispatch(getFermenterData());
   }, []); //Use [] to make sure this doesn't re-run
 
 
@@ -102,28 +108,26 @@ export default function ButtonAppBar() {
     <Container maxWidth="xl">
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography display='inline' variant="h4" color="textSecondary" >
-            {"Fermentation > "}
-          </Typography>
-          <Typography display='inline' variant="h4" color="textPrimary" >
-            Oatmeal New England IPA (04-05-2020)
-          </Typography>
-
+          
           </Grid>
           <Grid item xs={2}><DisplayBox title="beer temperature" display={temp + ' °F'} className={classes.topBar}/></Grid>
           <Grid item xs={2}><DisplayBox title="air temperature" display={airTemp + ' °F'} className={classes.topBar}/></Grid>
-          <Grid item xs={2}><DisplayBox title="target" display={targetDisplay} icon={TrackChangesIcon} className={classes.topBar}/></Grid>
+          <Grid item xs={2}><DisplayBox title="target" display={target + ' °F'} icon={TrackChangesIcon} className={classes.topBar}/></Grid>
           <Grid item xs={3}>
-            <DisplayBox title="controls" icon={TrackChangesIcon} className={classes.topBar}>
+            {/* <DisplayBox title="controls" icon={TrackChangesIcon} className={classes.topBar}>
               <br/>
               <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"SCHEDULE"}))}>schedule</Button>
               <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"AUTO"}))}>target</Button>
-            </DisplayBox>
+            </DisplayBox> */}
+            <DisplayBox title="mode" display={mode} />
           </Grid>
           <Grid item xs={3}>
-            <DisplayBox title="power" icon={PowerSettingsNewIcon} className={classes.topBar}>
+            <DisplayBox title="actions" icon={PowerSettingsNewIcon} className={classes.topBar}>
               <br/>
-              <Button variant="contained" color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"OFF"}))}>turn off</Button>
+              <Button variant={(mode=='TARGET_PITCH')?"contained":"outlined"} color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"TARGET_PITCH"}))}>pitch</Button>
+              <Button variant={(mode=='SCHEDULE')?"contained":"outlined"} color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"SCHEDULE"}))}>schedule</Button>
+              <Button variant={(mode=='SCHEDULE_PAUSE')?"contained":"outlined"} color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"SCHEDULE_PAUSE"}))}>pause</Button>
+              <Button variant={(mode=='OFF')?"contained":"outlined"} color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"OFF"}))}>turn off</Button>
             </DisplayBox>
           </Grid>
           
@@ -158,7 +162,7 @@ export default function ButtonAppBar() {
           
         </Grid>
         <Grid item xs={3}>
-        <DisplayBox title="state" display={fermState} />
+        <DisplayBox title="device state" display={deviceState} />
         <br/>
         <DisplayBox title="current day" display={days} icon={TimerIcon} />
         <br/>

@@ -1063,7 +1063,7 @@
     file-loader "^6.2.0"
     url-loader "^4.1.1"
 
-"@neutrinojs/react@^9.5.0":
+"@neutrinojs/react@^9.1.0":
   version "9.5.0"
   resolved "https://registry.yarnpkg.com/@neutrinojs/react/-/react-9.5.0.tgz#3ea0c94aaef7045c74fc53b581d7e989a83e67dd"
   integrity sha512-izG8MVTlCahh+U3iCiSxinohApTbaCFFr7qxyZz+SWSUC5fXwFrHnBVB+1yHYJ5g6XpQiGKZkAOxGsTo475Q7g==
@@ -4509,7 +4509,7 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-neutrino@^9.5.0:
+neutrino@^9.1.0:
   version "9.5.0"
   resolved "https://registry.yarnpkg.com/neutrino/-/neutrino-9.5.0.tgz#8d4cfedc911cefa68876c8331d1d8f22423bc65b"
   integrity sha512-nbCwUAVV4jJGiYcWVX8oBWWyubyLEuN90E1YoxRdmzsAvPudjNVlCYfcVYR7txQWqspZoB5NjRuHA+pCB6Vr7A==

@@ -22,7 +22,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DropDownMenu from "./DropDownMenu";
 import Typography from "@material-ui/core/Typography";
-import {editFermenter, editCancel, editRow, removeRow, updateFermenter} from "../store/actions/brewActions";
+import {editSchedule, editScheduleCancel, editScheduleRow, removeScheduleRow, updateFermenter} from "../store/actions/fermenterActions";
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import HighlightOff from "@material-ui/icons/HighlightOff";
 
@@ -55,7 +55,7 @@ const Schedule = props => {
   
 
   const editAction = () =>{
-    return dispatch(editFermenter());
+    return dispatch(editSchedule());
   }
 
   const options = [{name:"Edit Schedule", action:editAction}];
@@ -107,7 +107,7 @@ const Schedule = props => {
                 <Input 
                   value={row.day}
                   name='day'
-                  onChange={e => dispatch(editRow(e, row.id, 'day'))}
+                  onChange={e => dispatch(editScheduleRow(e, row.id, 'day'))}
                   className={classes.input}
                 />
               }
@@ -118,7 +118,7 @@ const Schedule = props => {
                 <Input 
                   value={row.target}
                   name='target'
-                  onChange={e => dispatch(editRow(e, row.id, 'target'))}
+                  onChange={e => dispatch(editScheduleRow(e, row.id, 'target'))}
                   className={classes.input}
                 />
               }
@@ -127,7 +127,7 @@ const Schedule = props => {
 
               {edit && 
                 <TableCell padding='none'>
-                  <IconButton size='small' color='primary' aria-label="settings" onClick={e => dispatch(removeRow(row.id))}>
+                  <IconButton size='small' color='primary' aria-label="settings" onClick={e => dispatch(removeScheduleRow(row.id))}>
                   <HighlightOff />
                 </IconButton>
                 </TableCell>
@@ -145,7 +145,7 @@ const Schedule = props => {
       </CardContent>
       {edit &&
             <CardActions>
-            <Button  color="primary" onClick={()=> dispatch(editCancel())} >cancel</Button>
+            <Button  color="primary" onClick={()=> dispatch(editScheduleCancel())} >cancel</Button>
             <Typography className={classes.actions}></Typography>
             
                 <Button variant="contained" color="primary" onClick={()=> dispatch(updateFermenter(editConfig))}>save</Button>
