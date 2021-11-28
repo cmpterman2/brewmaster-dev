@@ -17,4 +17,19 @@ export function getSession() {
   }
 }
 
+export function updateSession(config)
+{
+    return function(dispatch) {
+    dispatch({type: "SESSION_UPDATE"});
+    axios.post("/services/session/config", config)
+      .then((response) => {
+        dispatch({type: "SESSION_UPDATE_FULFILLED", payload: config})
+        dispatch(getSession());
+      })
+      .catch((err) => {
+        dispatch({type: "SESSION_UPDATE_REJECTED", error: err.response.data})
+      })
+  }
+}
+
 

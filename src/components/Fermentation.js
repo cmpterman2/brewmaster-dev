@@ -36,6 +36,7 @@ import Schedule from "./Schedule";
 import DisplayBox from './DisplayBox'
 
 import {getFermenterData, updateFermenter} from "../store/actions/fermenterActions"
+import {getFermenterHistoryData} from "../store/actions/fermenterHistoryActions"
 
 
 const useStyles = makeStyles(theme => ({
@@ -65,7 +66,11 @@ export default function ButtonAppBar() {
   const dispatch = useDispatch();
 
   const chart = useSelector(state => state.chart, shallowEqual);
-  console.log(useSelector(state => state.fermenter));
+  //console.log(useSelector(state => state.fermenter));
+  const fermData = useSelector(state => state.fermenterHistory.ferm);
+  const airData = useSelector(state => state.fermenterHistory.air);
+  const targetData = useSelector(state => state.fermenterHistory.target);
+
 
   //State variables
   const temp = useSelector(state => state.fermenter.state.fermTemp);
@@ -98,6 +103,7 @@ export default function ButtonAppBar() {
   useEffect(() => {
     // Update the document title using the browser API
     dispatch(getFermenterData());
+    dispatch(getFermenterHistoryData());
   }, []); //Use [] to make sure this doesn't re-run
 
 
@@ -148,7 +154,7 @@ export default function ButtonAppBar() {
               subheaderTypographyProps={{ "variant": "body2" }}
             />
             <CardContent>
-            <Chart chart={chart} dispatch={dispatch} onBrushDomainChange={handleBrush} />
+            <Chart chart={chart} dispatch={dispatch} onBrushDomainChange={handleBrush} fermData={fermData} airData={airData} targetData={targetData}/>
             </CardContent>
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites">

@@ -1,31 +1,29 @@
 export default function reducer(state={
 
-    burner:{
       config:{
-        duty: 0,
-        target: 0.0,
+        target: NaN,
         mode: 'OFF',
       },
-      gpio: 'gpio id',
-      lastReading: {
-        displayTemp: 0,
-        readTime: 0,
-      },
-      history:[],
-      probe: 'probe id',
-    },
-  }, action) {
-    switch (action.type) {
-      case "BURNER_CONFIG_REJECTED": {
-        return {...state, error: action.payload}
+      state: {
+        temp: NaN,
       }
-      case "BURNER_CONFIG_FULFILLED": {
-        const data = action.payload;
-        const history = state.burner.history;
+    }, action) {
+    switch (action.type) {
+      // case "BREW_CONFIG_REJECTED":
+      // case "BREW_STATE_REJECTED": {
+      //   return {...state, error: action.payload}
+      // }
+      case "BREW_CONFIG_FULFILLED": {
+
         return {
           ...state,
-          burner:{...action.payload, history:history},
-          error: null,
+          config:action.payload
+        }
+      }
+      case "BREW_STATE_FULFILLED": {
+        return {
+          ...state,
+          state:action.payload
         }
       }
       case "REDUX_WEBSOCKET::MESSAGE": {
@@ -33,11 +31,11 @@ export default function reducer(state={
         //Check to see if this is a temp change
         console.log(action.payload.message);
         const wsData = JSON.parse(action.payload.message);
-        const {type, id, data} = wsData;
-        const {burner} = state;
-        const {history} = burner;
-        if( type === 'TEMP' && id === 'burner') {
-            return {...state, burner:{...burner, lastReading:data, history:[...history,data]}}
+        const {type, time, data} = wsData;
+        if( type === 'BREW.STATE') {
+          return {...state, state:data}
+        } else if ( type === 'BREW.CONFIG') {
+          return {...state, config:data}
         }
       }
     }

@@ -1,7 +1,8 @@
 export default function reducer(state={
 
-    session:{
-      state : 'NONE',
+    config:{
+      phase : 'NONE',
+      mode : 'PAUSED'
     },
   }, action) {
     switch (action.type) {
@@ -13,7 +14,7 @@ export default function reducer(state={
         // const history = state.burner.history;
         return {
           ...state,
-          session : action.payload,
+          config : action.payload,
           error: null,
         }
       }

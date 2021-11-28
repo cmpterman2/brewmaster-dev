@@ -48,7 +48,7 @@ import Schedule from "./Schedule";
 
 import DisplayBox from './DisplayBox'
 
-import {getFermenterConfig, updateFermenter, sendFile} from "../store/actions/brewActions"
+import {getFermenterConfig, updateFermenter, sendFile} from "../store/actions/brewActionsOld"
 
 
 const useStyles = makeStyles(theme => ({

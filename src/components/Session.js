@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { Redirect } from "react-router";
 
 
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -10,11 +11,12 @@ import {getSession} from "../store/actions/sessionActions.js";
 
 
 import Recipe from './Recipe.js';
+import Brew from './Brew.js';
 
 import App from './Fermentation.js';
 
 import Upload from './Upload.js';
-import { Link, Switch, Route } from "react-router-dom";
+import { Link, Switch, Route, useLocation } from "react-router-dom";
 
 
 
@@ -41,6 +43,8 @@ const Session = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const phase = useSelector(state => state.session.config.phase);
+
   const steps = ["Recipe", "Prep", "Mash", "Boil", "Cool", "Ferment", "Done"];
 
 
@@ -50,6 +54,14 @@ const Session = () => {
     dispatch(getSession());
   }, []); //Use [] to make sure this doesn't re-run
 
+
+  //Check for mis-match on session and current path and redirect
+  const path = useLocation().pathname.substring('/session/'.length);
+  const pathPhase = phase.split('_')[0].toLowerCase();
+
+  if( path != pathPhase && phase != 'NONE' ) {
+    return (<Redirect to={'/session/'+pathPhase}/>)
+  } 
 
 
 
@@ -64,7 +76,7 @@ const Session = () => {
         <Grid container spacing={2}>
           <Grid item xs={4}>
           <Typography display='inline' variant="h4" color="textSecondary" >
-            {"Fermentation > "}
+            {phase + ' > '}
           </Typography>
           <Typography display='inline' variant="h4" color="textPrimary" >
             Oatmeal New England IPA (11-06-2021)
@@ -94,6 +106,7 @@ const Session = () => {
 
         <Switch>
           <Route exact path="/session/recipe" component={Recipe}></Route>
+          <Route exact path="/session/brew" component={Brew}></Route>
           <Route exact path="/session/fermentation" component={App}></Route>
           <Route exact path="/session/upload" component={Upload}></Route>
         </Switch>

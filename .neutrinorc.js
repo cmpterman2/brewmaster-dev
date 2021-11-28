@@ -16,7 +16,9 @@ module.exports = {
       host:'0.0.0.0',
       hot: true,
       proxy: {
+        '/services/session/history/fermenter/state': 'http://192.168.1.10:8080',
         '/services': 'http://192.168.1.107:8080',
+        
         '/events': 'http://192.168.1.107:8080'
       },
       contentBase: 'src/assets',

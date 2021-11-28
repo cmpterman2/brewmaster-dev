@@ -38,19 +38,25 @@ class Chart extends React.Component {
     />
     <VictoryLine
       style={{
-        data: { stroke: "tomato" }
+        data: { stroke: "gold", strokeWidth: .75 }
       }}
-      data={[
-        { x: new Date(1982, 1, 1), y: 125 },
-        { x: new Date(1987, 1, 1), y: 257 },
-        { x: new Date(1993, 1, 1), y: 345 },
-        { x: new Date(1997, 1, 1), y: 515 },
-        { x: new Date(2001, 1, 1), y: 132 },
-        { x: new Date(2005, 1, 1), y: 305 },
-        { x: new Date(2011, 1, 1), y: 270 },
-        { x: new Date(2015, 1, 1), y: 470 }
-      ]}
+      data={this.props.targetData}
     />
+    {/* <VictoryLine
+      style={{
+        data: { stroke: "orange" }
+      }}
+      data={this.props.airData}
+    /> */}
+    <VictoryLine
+      //interpolation="step"
+      style={{
+        data: { stroke: "tomato", strokeWidth: .75 }
+      }}
+      data={this.props.fermData}
+    />
+    
+    
 
   </VictoryChart>
 
@@ -66,30 +72,21 @@ class Chart extends React.Component {
     }
   >
     <VictoryAxis
-      tickValues={[
-        new Date(1985, 1, 1),
-        new Date(1990, 1, 1),
-        new Date(1995, 1, 1),
-        new Date(2000, 1, 1),
-        new Date(2005, 1, 1),
-        new Date(2010, 1, 1)
-      ]}
-      tickFormat={(x) => new Date(x).getFullYear()}
+      // tickValues={[
+      //   new Date(1985, 1, 1),
+      //   new Date(1990, 1, 1),
+      //   new Date(1995, 1, 1),
+      //   new Date(2000, 1, 1),
+      //   new Date(2005, 1, 1),
+      //   new Date(2010, 1, 1)
+      // ]}
+      // tickFormat={(x) => new Date(x).getFullYear()}
     />
     <VictoryLine
       style={{
         data: { stroke: "tomato" }
       }}
-      data={[
-        { x: new Date(1982, 1, 1), y: 125 },
-        { x: new Date(1987, 1, 1), y: 257 },
-        { x: new Date(1993, 1, 1), y: 345 },
-        { x: new Date(1997, 1, 1), y: 515 },
-        { x: new Date(2001, 1, 1), y: 132 },
-        { x: new Date(2005, 1, 1), y: 305 },
-        { x: new Date(2011, 1, 1), y: 270 },
-        { x: new Date(2015, 1, 1), y: 470 }
-      ]}
+      data={this.props.fermData}
     />
   </VictoryChart>
     </div>

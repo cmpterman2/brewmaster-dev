@@ -48,9 +48,10 @@ import Schedule from "./Schedule";
 
 import DisplayBox from './DisplayBox'
 
-import {getFermenterConfig, updateFermenter, sendFile} from "../store/actions/brewActions"
+import {getFermenterConfig, updateFermenter, sendFile} from "../store/actions/brewActionsOld"
 
 import {getRecipe} from "../store/actions/recipeActions"
+import {updateSession} from "../store/actions/sessionActions"
 
 
 const useStyles = makeStyles(theme => ({
@@ -80,28 +81,6 @@ export default function Recipe() {
 
   const dispatch = useDispatch();
 
-  const chart = useSelector(state => state.chart, shallowEqual);
-
-  const temp = useSelector(state => state.fermenter.lastReading.displayTemp);
-  const airTemp = useSelector(state => state.fermenter.airLastReading.displayTemp);
-  const target = useSelector(state => state.fermenter.config.target);
-  const mode = useSelector(state => state.fermenter.config.mode);
-  const schedule = useSelector(state => state.fermenter.config.schedule, shallowEqual);
-  const editConfig = useSelector(state => state.fermenter.editConfig, shallowEqual);
-  const config = useSelector(state=> state.fermenter.config, shallowEqual);
-  const scheduleStart = useSelector(state => state.fermenter.scheduleStart);
-  const fermState = useSelector(state => state.fermenter.state);
-
-  let days = 'Not Started';
-  if (scheduleStart > 0 ) {
-    const now = new Date();
-    days = Number.parseFloat( (now - scheduleStart) /24/60/60/1000).toFixed(1);
-  }
-  //const socket = useSelector(state => state.socket,shallowEqual);
-
-  const handleBrush = (domain) => {
-    // dispatch(handleBrush(domain));
-  }
 
 
   //Call this once - similar to onMount see https://reactjs.org/docs/hooks-overview.html
@@ -111,7 +90,7 @@ export default function Recipe() {
   }, []); //Use [] to make sure this doesn't re-run
 
 
-  const targetDisplay = mode === 'OFF' ? 'OFF' : target + ' °F';
+ 
 
   const onChange = (event) => {
     
@@ -282,21 +261,13 @@ variant="extended"
       </Grid>
           </DisplayBox>
           </Grid>
-          <Grid item xs={2}><DisplayBox title="water" display={airTemp + ' °F'} className={classes.topBar}/></Grid>
-          <Grid item xs={2}><DisplayBox title="target" display={targetDisplay} icon={TrackChangesIcon} className={classes.topBar}/></Grid>
           <Grid item xs={3}>
-            <DisplayBox title="controls" icon={TrackChangesIcon} className={classes.topBar}>
+            <DisplayBox title="actions" icon={PowerSettingsNewIcon} className={classes.topBar}>
               <br/>
-              <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"SCHEDULE"}))}>schedule</Button>
-              <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"AUTO"}))}>target</Button>
+              <Button variant="contained" color="secondary" onClick={()=> dispatch(updateSession({phase:'BREW_START', mode:"ACTIVE"}))}>Start Brew</Button>
             </DisplayBox>
           </Grid>
-          <Grid item xs={3}>
-            <DisplayBox title="power" icon={PowerSettingsNewIcon} className={classes.topBar}>
-              <br/>
-              <Button variant="contained" color="secondary" onClick={()=> dispatch(updateFermenter({...config, mode:"OFF"}))}>turn off</Button>
-            </DisplayBox>
-          </Grid>
+          
           </Grid>
     
 
