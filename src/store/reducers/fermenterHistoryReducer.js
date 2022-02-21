@@ -55,7 +55,9 @@ export default function reducer(state={
 
         if( type === 'FERM.STATE') {
           return {...state, ferm:[...ferm, {x: time, y: data.fermTemp}], target:[...target, {x:time, y:data.target}], air:[...air, {x:time, y:data.airTemp}]}
-        } 
+        } else {
+          return state;
+        }
       }
 
       // case "FERMENTER_SCHEDULE_EDIT": {

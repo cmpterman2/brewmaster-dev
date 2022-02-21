@@ -79,7 +79,7 @@ const Session = () => {
             {phase + ' > '}
           </Typography>
           <Typography display='inline' variant="h4" color="textPrimary" >
-            Oatmeal New England IPA (11-06-2021)
+            New England IPA
           </Typography>
            
             </Grid>

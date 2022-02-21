@@ -61,10 +61,6 @@ const Schedule = props => {
   const options = [{name:"Edit Schedule", action:editAction}];
 
 
-  console.log('foo');
-  console.log(editConfig);
-  console.log(data);
-
   return (
     
     <Card>

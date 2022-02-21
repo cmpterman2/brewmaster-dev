@@ -39,6 +39,8 @@ export default function reducer(state={
           } else if( id === 'air') {
             return {...state, history:{...history, burner:[...burner,data], chartableAir:[...chartableAir, {x: new Date(data.readTime), y: data.displayTemp}]}}
           }
+        } else {
+          return state;
         }
       }
     }

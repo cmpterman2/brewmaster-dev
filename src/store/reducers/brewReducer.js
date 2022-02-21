@@ -36,6 +36,8 @@ export default function reducer(state={
           return {...state, state:data}
         } else if ( type === 'BREW.CONFIG') {
           return {...state, config:data}
+        } else {
+          return state;
         }
       }
     }

@@ -17,6 +17,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 
 import { red, blue } from "@material-ui/core/colors";
+import RestoreIcon from "@material-ui/icons/Restore";
+import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos"
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -29,37 +31,19 @@ import TimerIcon from '@material-ui/icons/Timer';
 
 import Chart from "./Chart.js";
 
-import Schedule from "./Schedule";
 
-//import {theme} from './theme/theme';
 
 import DisplayBox from './DisplayBox'
 
 import {getBrewConfig, getBrewState} from "../store/actions/brewActions"
-import {getFermenterHistoryData} from "../store/actions/fermenterHistoryActions"
 
 
-import {updateSession} from "../store/actions/sessionActions"
+
+import {updateSession, undoLastSession} from "../store/actions/sessionActions"
 
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    flexGrow: 1
-  },
-  foo: {
-    color: theme.palette.primary.constrastText,
-    backgroundColor: theme.palette.primary.main,
-    height: 0
-  },
-  topBar: {
-    height: '100%'
-  }
+
 }));
 
 const nextPhase = (phase) => {
@@ -140,17 +124,14 @@ export default function ButtonAppBar() {
           <Grid item xs={2}><DisplayBox title="device state" display={deviceMode} className={classes.topBar}/></Grid>
           
           <Grid item xs={3}>
-            {/* <DisplayBox title="controls" icon={TrackChangesIcon} className={classes.topBar}>
-              <br/>
-              <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"SCHEDULE"}))}>schedule</Button>
-              <Button variant="outlined" color="primary" onClick={()=> dispatch(updateFermenter({...config, mode:"AUTO"}))}>target</Button>
-            </DisplayBox> */}
             <DisplayBox title="mode" display={mode} />
           </Grid>
           <Grid item xs={3}>
             <DisplayBox title="actions" icon={PowerSettingsNewIcon} className={classes.topBar}>
+              
               <br/>
-              <Button variant="contained" color="secondary" onClick={()=> dispatch(updateSession({phase:nextPhase(phase), mode:"ACTIVE"}))}>{phaseLabel(nextPhase(phase))}</Button>
+              <Button variant="outlined" color="secondary" startIcon={(<RestoreIcon/>)} onClick={()=> dispatch(undoLastSession())}>Back</Button>
+              <Button variant="contained" color="secondary" endIcon={(<ArrowForwardIos/>)} onClick={()=> dispatch(updateSession({phase:nextPhase(phase), mode:"ACTIVE"}))}>{phaseLabel(nextPhase(phase))}</Button>
               <br />
               <Button variant="outlined" color="secondary" onClick={()=> dispatch(updateSession({phase, mode: (mode === 'ACTIVE')?'PAUSED':'ACTIVE' }))}>{(mode === 'ACTIVE')?'PAUSE':'UNPAUSE'}</Button>
             </DisplayBox>

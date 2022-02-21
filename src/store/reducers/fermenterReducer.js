@@ -35,7 +35,10 @@ export default function reducer(state={
           return {...state, state:data}
         } else if ( type === 'FERM.CONFIG') {
           return {...state, config:data}
+        } else {
+          return state;
         }
+
       }
 
       case "FERMENTER_SCHEDULE_EDIT": {

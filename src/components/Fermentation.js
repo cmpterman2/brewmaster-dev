@@ -49,11 +49,6 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1
   },
-  foo: {
-    color: theme.palette.primary.constrastText,
-    backgroundColor: theme.palette.primary.main,
-    height: 0
-  },
   topBar: {
     height: '100%'
   }
@@ -66,7 +61,6 @@ export default function ButtonAppBar() {
   const dispatch = useDispatch();
 
   const chart = useSelector(state => state.chart, shallowEqual);
-  //console.log(useSelector(state => state.fermenter));
   const fermData = useSelector(state => state.fermenterHistory.ferm);
   const airData = useSelector(state => state.fermenterHistory.air);
   const targetData = useSelector(state => state.fermenterHistory.target);

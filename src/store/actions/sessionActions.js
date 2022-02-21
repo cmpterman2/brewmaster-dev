@@ -32,4 +32,19 @@ export function updateSession(config)
   }
 }
 
+export function undoLastSession()
+{
+    return function(dispatch) {
+    dispatch({type: "SESSION_UNDO"});
+    axios.get("/services/session/undo")
+      .then((response) => {
+        dispatch({type: "SESSION_UNDO_FULFILLED", payload: config})
+        dispatch(getSession());
+      })
+      .catch((err) => {
+        dispatch({type: "SESSION_UNDO_REJECTED", error: err.response})
+      })
+  }
+}
+
 
